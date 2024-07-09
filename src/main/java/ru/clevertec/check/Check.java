@@ -64,7 +64,7 @@ public class Check {
     }
 
     public String generateCheckMsg(){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.YYYY;HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy;HH:mm:ss");
         String text = String.format("Date;Time\n" +
                 "%s\n" +
                 "\n" +
@@ -72,20 +72,20 @@ public class Check {
                 , formatter.format(this.checkInfo.getDateTimeCurrent())
         );
         for (ProductBought p : checkInfo.getProductsBought()) {
-            text = text + String.format(
+            text += String.format(
                     "%d;%s;%.2f$;%.2f$;%.2f$\n",
                     p.getQuantity(), p.getProduct().getDescription(), p.getProduct().getPrice(),
                     p.getDiscount(), p.getTotal()
             );
         }
         if (checkInfo.getDiscountCard() != null) {
-            text = text + String.format("\n" +
+            text += String.format("\n" +
                     "DISCOUNT CARD;DISCOUNT PERCENTAGE\n" +
                     "%d;%d%%\n", checkInfo.getDiscountCard().getNumber(), checkInfo.getDiscountCard().discountAmount);
         }
-        text = text + String.format("\n" +
-                "TOTAL PRICE;TOTAL DISCOUNT;TOTAL WITH DISCOUNT\n" +
-                "%.2f$;%.2f$;%.2f$",
+        text += String.format("\n" +
+                        "TOTAL PRICE;TOTAL DISCOUNT;TOTAL WITH DISCOUNT\n" +
+                        "%.2f$;%.2f$;%.2f$",
                 this.checkInfo.getTotalPrice(), this.checkInfo.getTotalDiscount(),
                 this.checkInfo.getTotalWithDiscount()
         );
