@@ -15,28 +15,22 @@ public class InfoBase {
     private List<Product> productsInfo = new ArrayList<>();
     private List<DiscountSpec> discountsInfo = new ArrayList<>();
 
-    public List<Product> getProductsInfo() {
-        return productsInfo;
+
+    public InfoBase(String productsPath, String discountsPath) {
+        importProducts(productsPath);
+        importDiscounts(discountsPath);
     }
 
-    public void setProductsInfo(List<Product> productsInfo) {
-        this.productsInfo = productsInfo;
-    }
-
-    public List<DiscountSpec> getDiscountsInfo() {
-        return discountsInfo;
-    }
-
-    public void setDiscountsInfo(List<DiscountSpec> discountsInfo) {
-        this.discountsInfo = discountsInfo;
+    public InfoBase() {
+        importProducts(defaultProductsPath);
+        importDiscounts(defaultDiscountsPath);
     }
 
     public void importProducts(String productsPath) {
         List<List<String>> productsInfoStr;
 
         try (Stream<String> lines = Files.lines(Paths.get(productsPath))) {
-            productsInfoStr = lines.map(line -> Arrays.asList(line.split(delimiter)))
-                    .toList();
+            productsInfoStr = lines.map(line -> Arrays.asList(line.split(delimiter))).toList();
         }
         catch (IOException e) {
             System.out.println("Cannot find file products.csv");
@@ -52,8 +46,7 @@ public class InfoBase {
         List<List<String>> discountsInfoStr;
 
         try (Stream<String> lines = Files.lines(Paths.get(discountsPath))) {
-            discountsInfoStr = lines.map(line -> Arrays.asList(line.split(delimiter)))
-                    .toList();
+            discountsInfoStr = lines.map(line -> Arrays.asList(line.split(delimiter))).toList();
         }
         catch (IOException e) {
             System.out.println("Cannot find file discounts.csv");
@@ -62,18 +55,6 @@ public class InfoBase {
         for (int i = 1; i < discountsInfoStr.size(); i++) {
             discountsInfo.add(new DiscountSpec(discountsInfoStr.get(i)));
         }
-
-
-    }
-
-    public InfoBase(String productsPath, String discountsPath) {
-        importProducts(productsPath);
-        importDiscounts(discountsPath);
-    }
-
-    public InfoBase() {
-        importProducts(defaultProductsPath);
-        importDiscounts(defaultDiscountsPath);
     }
 
     public void printInfo() {
@@ -81,10 +62,28 @@ public class InfoBase {
             System.out.printf("%-5d | %-30s | %-5.2f | %-5d | %-10b\n",
                     p.getId(), p.getDescription(), p.getPrice(), p.getQuantityInStock(), p.isWholesale());
         }
+        System.out.println();
         for (DiscountSpec d : discountsInfo){
             System.out.printf("%-5d | %-5d | %-5d\n",
                     d.getId(), d.getNumber(), d.getDiscountAmount());
         }
+        System.out.println();
+    }
+
+    public List<Product> getProductsInfo() {
+        return productsInfo;
+    }
+
+    public void setProductsInfo(List<Product> productsInfo) {
+        this.productsInfo = productsInfo;
+    }
+
+    public List<DiscountSpec> getDiscountsInfo() {
+        return discountsInfo;
+    }
+
+    public void setDiscountsInfo(List<DiscountSpec> discountsInfo) {
+        this.discountsInfo = discountsInfo;
     }
 }
 

@@ -4,6 +4,7 @@ public abstract class Discount {
     protected Integer number;
     protected Integer discountAmount;
 
+
     public Integer getNumber() {
         return number;
     }

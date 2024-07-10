@@ -6,21 +6,14 @@ public class ProductBought {
     private Float discount;
     private Float total;
 
-    public ProductBought(Product product, Integer quantity){
-        this.product = product;
-        this.quantity = quantity;
-        this.discount = null;
-        this.total = null;
-    }
 
-    public ProductBought(Integer id, Integer quantity, InfoBase infoBase){
+    public ProductBought(Integer id, Integer quantity, InfoBase infoBase) {
         for (Product p : infoBase.getProductsInfo()) {
             if (p.getId() == id) {
                 setProduct(p);
             }
         }
         setQuantity(quantity);
-
     }
 
     public Float getDiscount() {
@@ -45,11 +38,6 @@ public class ProductBought {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public ProductBought() {
-        product = null;
-        quantity = 0;
     }
 
     public Product getProduct() {

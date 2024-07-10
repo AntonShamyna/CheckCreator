@@ -10,16 +10,10 @@ public class CheckInfo {
     private Discount discountCard;
     private Errors errors;
     private Float balanceDebitCard;
-    private Float totalPrice;
-    private Float totalDiscount;
+    private Float totalPrice = 0F;
+    private Float totalDiscount = 0F;
     private Float totalWithDiscount;
 
-    {
-        discountCard = null;
-        balanceDebitCard = null;
-        totalPrice = 0F;
-        totalDiscount = 0F;
-    }
 
     public CheckInfo(Errors errors) {
         this.errors = errors;

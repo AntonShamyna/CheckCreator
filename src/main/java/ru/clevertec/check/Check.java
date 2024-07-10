@@ -11,6 +11,15 @@ public class Check {
     private CheckInfo checkInfo;
     private Errors errors;
 
+
+    public Check(InfoBase infoBase, String[] dataString) {
+        this.infoBase = infoBase;
+        this.errors = new Errors();
+        this.checkInfo = new CheckInfo(errors);
+        this.readArgs(dataString);
+        this.checkInfo.calculate();
+    }
+
     public void readArgs(String[] args) {
         for (String s : args) {
             if (Pattern.matches("[0-9]+-[0-9]+", s)) {
@@ -59,8 +68,9 @@ public class Check {
                 errors.printErrorAndExit(1);
         }
 
-        if (checkInfo.getProductsBought().isEmpty() || checkInfo.getBalanceDebitCard() == null)
+        if (checkInfo.getProductsBought().isEmpty() || checkInfo.getBalanceDebitCard() == null) {
             errors.printErrorAndExit(1);
+        }
     }
 
     public String generateCheckMsg(){
@@ -104,14 +114,6 @@ public class Check {
         }
 
         System.out.println(checkMsg);
-    }
-
-    public Check(InfoBase infoBase, String[] dataString) {
-        this.infoBase = infoBase;
-        this.errors = new Errors();
-        this.checkInfo = new CheckInfo(errors);
-        this.readArgs(dataString);
-        this.checkInfo.calculate();
     }
 
     public InfoBase getInfoBase() {
